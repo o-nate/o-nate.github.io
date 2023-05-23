@@ -10,7 +10,7 @@ let gridx;
 let gridy;
 
 function setup() {
-    createCanvas(windowWidth * .75, height);
+    createCanvas((windowWidth * .75), height);
     background(252);
     slider_n = createSlider(1, 20, 1);
     slider_r = createSlider(10, height * .35, 100);
@@ -20,17 +20,17 @@ function draw() {
     background(252);
 
     // Make graph grid
-    for (var gridx = 0; gridx < windowWidth; gridx += windowWidth / 10) {
+    for (var gridx = 0; gridx < (windowWidth * .75); gridx += (windowWidth * .75) / 10) {
         for (var gridy = 0; gridy < height; gridy += height / 6) {
             fill(85, 80, 92);
             stroke(0);
             strokeWeight(.1);
             line(gridx, 0, gridx, height);
-            line(0, gridy, windowWidth, gridy);
+            line(0, gridy, (windowWidth * .75), gridy);
         }
     }
 
-    translate(windowWidth * .75, 250);
+    translate((windowWidth * .75) * .75, 250);
     strokeWeight(3);
 
     let x = 0;
