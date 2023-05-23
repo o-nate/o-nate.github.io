@@ -10,7 +10,7 @@ let gridx;
 let gridy;
 
 function setup() {
-    createCanvas(windowWidth, height);
+    createCanvas(windowWidth * .75, height);
     background(252);
     slider_n = createSlider(1, 20, 1);
     slider_r = createSlider(10, height * .35, 100);
