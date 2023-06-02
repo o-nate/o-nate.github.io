@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Flocking simulation</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.min.js"></script>
+    <script src="flocking.js"></script>
+    <script src="boid.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<!-- <body onload="makeTable()"> -->
+
+<body>
+
+    <p>
+        Max force: <span id="frc"></span> |
+        Max speed: <span id="spd"></span> |
+        Perception radius: <span id="per"></span> |
+        Velocity alignment: <span id="aln"></span> |
+        Flock cohesion: <span id="coh"></span> |
+        Agent separation: <span id="sep"></span> |
+    </p>
+    <br><br>
+
+    <!-- <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Object</th>
+                <th>Velocity</th>
+                <th>Time elapsed</th>
+            </tr>
+        </thead>
+        <tbody id="tablebody">
+        </tbody>
+    </table> -->
+
+    <!-- <div>
+      <canvas id="chart"></canvas>
+    </div> -->
+    <!-- 
+    <script>
+        function makeTable() {
+            console.log(1);
+            let html = '';
+            for (let i = 0; i < 5; i++) {
+                let html_val = `<span id="m[${i}]"></span>`;
+                let html_hist = `<span id="m[${i}].history"></span>`;
+                let html_time = `<span id="m[${i}].time"></span>`;
+                html += `<tr>
+                      <td>${i + 1}</td>
+                      <td>${html_val}</td>
+                      <td>${html_time}</td>
+                      <td>${html_hist}</td>
+                      </tr>`;
+            }
+            document.getElementById('tablebody').innerHTML = html;
+        }
+
+        getData();
+
+        function getData() {
+            for (let i = 0; i < 5; i++) {
+                if (document.getElementById(`m[${i}].time`) != null) {
+                    var val = document.getElementById(`m[${i}].time`).innerText;
+                    console.log(document.getElementById(`m[${i}].time`).innerText);
+                }
+            }
+
+        }
+    </script> -->
+
+    <!-- <script>
+  
+      makeChart();
+  
+      async function makeChart() {
+        await getData();
+        const ctx = document.getElementById('chart');
+        const xlabels = [];
+        for (let i = 0; i < 5; i++) {
+          xlabels.push(`m[${i}]`);
+          // console.log(xlabels[i]);
+        }
+  
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: xlabels,
+            datasets: [{
+              label: 'Object speed over time',
+              data: [12, 19, 3, 5, 2, 3],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      }
+    </script> -->
+
+</body>
+
+</html>
