@@ -133,7 +133,7 @@ class Boid {
         // let boidVector = createVector(this.position.x, this.position.y);
         this.history.push(this.position.copy());
 
-        if (this.history.length > 15) {
+        if (this.history.length > 10) {
             this.history.splice(0, 1);
         }
 
@@ -145,17 +145,17 @@ class Boid {
 
     show() {
         strokeWeight(5);
-        stroke(123, 100, 210);
+        stroke(194, 1, 20);
         point(this.position.x, this.position.y);
 
 
         for (var i = 0; i < this.history.length; i++) {
             let boidPos = this.history[i];
-            stroke(123, 100, 210);
+            stroke(194, 1, 20);
             ellipse(boidPos.x, boidPos.y, i, i);
         }
 
-        fill(125, 200, 111);
+        fill(252);
         this.history;
     }
 }

@@ -6,6 +6,7 @@ let cnvHeight;
 let cnvX;
 let cnvY;
 let sliderX;
+let sliderColor = '#67aaf9';
 
 let perceptionSlider, alignSlider, cohesionSlider, separationSlider;
 let maxForceSlider, maxSpeedSlider;
@@ -24,16 +25,22 @@ function setup() {
     console.log(startTime);
 
     maxForceSlider = createSlider(0, 5, 1.34, .02);
+    maxForceSlider.style("background", sliderColor);
     maxForceSlider.position(sliderX, windowHeight * sliderSeparation * 1);
     maxSpeedSlider = createSlider(0, 100, 5, 5);
+    maxSpeedSlider.style("background", sliderColor);
     maxSpeedSlider.position(sliderX, windowHeight * sliderSeparation * 2)
     perceptionSlider = createSlider(0, 100, 90, 10);
+    perceptionSlider.style("background", sliderColor);
     perceptionSlider.position(sliderX, windowHeight * sliderSeparation * 3)
     alignSlider = createSlider(0, 10, 8, .25);
+    alignSlider.style("background", sliderColor);
     alignSlider.position(sliderX, windowHeight * sliderSeparation * 4)
     cohesionSlider = createSlider(0, 10, 2, .25);
+    cohesionSlider.style("background", sliderColor);
     cohesionSlider.position(sliderX, windowHeight * sliderSeparation * 5)
     separationSlider = createSlider(0, 5, 2.5, .5);
+    separationSlider.style("background", sliderColor);
     separationSlider.position(sliderX, windowHeight * sliderSeparation * 6)
 
     buttonStop = createButton('stop');
@@ -64,7 +71,7 @@ function setup() {
 }
 
 function draw() {
-    background(51);
+    background(38, 20, 71);
 
     for (let boid of flock) {
         boid.edges();
@@ -80,13 +87,20 @@ function draw() {
     // document.getElementById(`boid.velocity`).innerHTML = boid.velocity.mag();
     // document.getElementById(`boid.history`).innerHTML = boid.history.length;
 
-    // text(`Max force: ${maxForceSlider.value()}`, maxForceSlider.x * 2 + maxForceSlider.width, maxForceSliderY);
-    text(`Max force: ${maxForceSlider.value()}`, maxForceSlider.x * 2 + maxForceSlider.width, maxForceSlider.y + 5);
-    text(`Max speed: ${maxSpeedSlider.value()}`, maxSpeedSlider.x * 2 + maxSpeedSlider.width, maxSpeedSlider.y + 5);
-    text(`Perception radius: ${perceptionSlider.value()}`, perceptionSlider.x * 2 + perceptionSlider.width, perceptionSlider.y + 5);
-    text(`Alignment: ${alignSlider.value()}`, alignSlider.x * 2 + alignSlider.width, alignSlider.y + 5);
-    text(`Cohesion: ${cohesionSlider.value()}`, cohesionSlider.x * 2 + cohesionSlider.width, cohesionSlider.y + 5);
-    text(`Separation: ${separationSlider.value()}`, separationSlider.x * 2 + separationSlider.width, separationSlider.y + 5);
+    fill(252);
+    noStroke();
+    text(`Max force: ${maxForceSlider.value()}`,
+        maxForceSlider.x * 2 + maxForceSlider.width, maxForceSlider.y + 5);
+    text(`Max speed: ${maxSpeedSlider.value()}`,
+        maxSpeedSlider.x * 2 + maxSpeedSlider.width, maxSpeedSlider.y + 5);
+    text(`Perception radius: ${perceptionSlider.value()}`,
+        perceptionSlider.x * 2 + perceptionSlider.width, perceptionSlider.y + 5);
+    text(`Alignment: ${alignSlider.value()}`,
+        alignSlider.x * 2 + alignSlider.width, alignSlider.y + 5);
+    text(`Cohesion: ${cohesionSlider.value()}`,
+        cohesionSlider.x * 2 + cohesionSlider.width, cohesionSlider.y + 5);
+    text(`Separation: ${separationSlider.value()}`,
+        separationSlider.x * 2 + separationSlider.width, separationSlider.y + 5);
     document.getElementById('frc').innerHTML = maxForceSlider.value();
     document.getElementById('spd').innerHTML = maxSpeedSlider.value();
     document.getElementById('per').innerHTML = perceptionSlider.value();
@@ -104,25 +118,26 @@ function startFlock() {
 }
 
 function mousePressed() {
-    if (maxForceSlider.x * 2 + maxForceSlider.width < mouseX && mouseY > separationSlider.y) {
-        console.log('1st (', maxForceSlider, ', ', separationSlider.y, ')');
-        console.log(mouseX, mouseY);
+    if (mouseY > separationSlider.y * 1.5) {
+        for (let i = 0; i < 5; i++) {
+            flock.push(new Boid());
+        };
+    } else if (maxForceSlider.x * 2 + maxForceSlider.width < mouseX &&
+        mouseY > separationSlider.y) {
         for (let i = 0; i < 5; i++) {
             flock.push(new Boid());
         };
     } else if (mouseX > buttonReset.x * 1.2) {
-        console.log('2n')
         for (let i = 0; i < 5; i++) {
             flock.push(new Boid());
         };
-    } else if (mouseX > maxForceSlider.x * 2 + maxForceSlider.width && mouseX < buttonReset.x * 2 && mouseY > buttonReset.y * 2) {
-        console.log('yes', buttonReset.y, mouseY);
-
+    } else if (mouseX > maxForceSlider.x * 2 + maxForceSlider.width &&
+        mouseX < buttonReset.x * 2 && mouseY > buttonReset.y * 2) {
         for (let i = 0; i < 5; i++) {
             flock.push(new Boid());
         };
     } else {
-        console.log(buttonReset.x, buttonReset.y, mouseX, mouseY);
+        return;
     }
 }
 
@@ -133,8 +148,6 @@ function mousePressed() {
 function resetSketch() {
     draw;
     mousePressed;
-    console.log('hi');
     flock = [];
-    console.log('hi again');
     history = [];
 }
