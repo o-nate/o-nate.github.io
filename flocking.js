@@ -6,18 +6,20 @@ let cnvHeight;
 let cnvX;
 let cnvY;
 let sliderX;
+let buttonX;
 let sliderColor = '#67aaf9';
 
 let perceptionSlider, alignSlider, cohesionSlider, separationSlider;
 let maxForceSlider, maxSpeedSlider;
 
 function setup() {
-    cnvWidth = windowWidth * 0.95;
+    cnvWidth = windowWidth;
     cnvHeight = windowHeight;
     cnvX = 0;
     cnvY = 0;
     sliderX = windowWidth * 0;
-    sliderSeparation = .04;
+    sliderSeparation = windowHeight * .04;
+    buttonX = windowWidth * 0.0;
 
     let cnv = createCanvas(cnvWidth, cnvHeight);
     cnv.position(cnvX, cnvY)
@@ -26,31 +28,31 @@ function setup() {
 
     maxForceSlider = createSlider(0, 5, 1.34, .02);
     maxForceSlider.style("background", sliderColor);
-    maxForceSlider.position(sliderX, windowHeight * sliderSeparation * 1);
+    maxForceSlider.position(sliderX, sliderSeparation * 1);
     maxSpeedSlider = createSlider(0, 100, 5, 5);
     maxSpeedSlider.style("background", sliderColor);
-    maxSpeedSlider.position(sliderX, windowHeight * sliderSeparation * 2)
+    maxSpeedSlider.position(sliderX, sliderSeparation * 2)
     perceptionSlider = createSlider(0, 100, 90, 10);
     perceptionSlider.style("background", sliderColor);
-    perceptionSlider.position(sliderX, windowHeight * sliderSeparation * 3)
+    perceptionSlider.position(sliderX, sliderSeparation * 3)
     alignSlider = createSlider(0, 10, 8, .25);
     alignSlider.style("background", sliderColor);
-    alignSlider.position(sliderX, windowHeight * sliderSeparation * 4)
+    alignSlider.position(sliderX, sliderSeparation * 4)
     cohesionSlider = createSlider(0, 10, 2, .25);
     cohesionSlider.style("background", sliderColor);
-    cohesionSlider.position(sliderX, windowHeight * sliderSeparation * 5)
+    cohesionSlider.position(sliderX, sliderSeparation * 5)
     separationSlider = createSlider(0, 5, 2.5, .5);
     separationSlider.style("background", sliderColor);
-    separationSlider.position(sliderX, windowHeight * sliderSeparation * 6)
+    separationSlider.position(sliderX, sliderSeparation * 6)
 
     buttonStop = createButton('stop');
-    buttonStop.position(windowWidth * .2, maxForceSlider.y);
+    buttonStop.position(buttonX, separationSlider.y * 1.15);
     buttonStop.mousePressed(stopFlock);
     buttonStart = createButton('start');
-    buttonStart.position(windowWidth * .25, maxForceSlider.y);
+    buttonStart.position(buttonX + buttonStop.width, separationSlider.y * 1.15);
     buttonStart.mousePressed(startFlock);
     buttonReset = createButton('reset');
-    buttonReset.position(windowWidth * .3, maxForceSlider.y);
+    buttonReset.position(buttonX + buttonStop.width + buttonStart.width, separationSlider.y * 1.15);
     buttonReset.mousePressed(resetSketch);
 
     // // pre-determine number of boids
@@ -118,21 +120,27 @@ function startFlock() {
 }
 
 function mousePressed() {
-    if (mouseY > separationSlider.y * 1.5) {
-        for (let i = 0; i < 5; i++) {
-            flock.push(new Boid());
-        };
-    } else if (maxForceSlider.x * 2 + maxForceSlider.width < mouseX &&
-        mouseY > separationSlider.y) {
-        for (let i = 0; i < 5; i++) {
-            flock.push(new Boid());
-        };
-    } else if (mouseX > buttonReset.x * 1.2) {
-        for (let i = 0; i < 5; i++) {
-            flock.push(new Boid());
-        };
-    } else if (mouseX > maxForceSlider.x * 2 + maxForceSlider.width &&
-        mouseX < buttonReset.x * 2 && mouseY > buttonReset.y * 2) {
+    // if (mouseY > separationSlider.y * 1.5) {
+    //     for (let i = 0; i < 5; i++) {
+    //         flock.push(new Boid());
+    //     };
+    // } else if (maxForceSlider.x * 2 + maxForceSlider.width < mouseX &&
+    //     mouseY > separationSlider.y) {
+    //     for (let i = 0; i < 5; i++) {
+    //         flock.push(new Boid());
+    //     };
+    // } else if (mouseX > buttonReset.x * 1.2) {
+    //     for (let i = 0; i < 5; i++) {
+    //         flock.push(new Boid());
+    //     };
+    // } else if (mouseX > maxForceSlider.x * 2 + maxForceSlider.width &&
+    //     mouseX < buttonReset.x * 2 && mouseY > buttonReset.y * 2) {
+    //     for (let i = 0; i < 5; i++) {
+    //         flock.push(new Boid());
+    //     };
+    // } 
+    if (mouseX > (maxForceSlider.x + maxForceSlider.width) * 1.2 ||
+        mouseY > (buttonReset.y + buttonReset.width) * 1.1) {
         for (let i = 0; i < 5; i++) {
             flock.push(new Boid());
         };
