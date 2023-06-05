@@ -13,6 +13,7 @@ let perceptionSlider, alignSlider, cohesionSlider, separationSlider;
 let maxForceSlider, maxSpeedSlider;
 
 function setup() {
+    pixelDensity(1)
     cnvWidth = windowWidth;
     cnvHeight = windowHeight;
     cnvX = 0;
@@ -103,12 +104,12 @@ function draw() {
         cohesionSlider.x * 2 + cohesionSlider.width, cohesionSlider.y + 5);
     text(`Separation: ${separationSlider.value()}`,
         separationSlider.x * 2 + separationSlider.width, separationSlider.y + 5);
-    document.getElementById('frc').innerHTML = maxForceSlider.value();
-    document.getElementById('spd').innerHTML = maxSpeedSlider.value();
-    document.getElementById('per').innerHTML = perceptionSlider.value();
-    document.getElementById('aln').innerHTML = alignSlider.value();
-    document.getElementById('coh').innerHTML = cohesionSlider.value();
-    document.getElementById('sep').innerHTML = separationSlider.value();
+    // document.getElementById('frc').innerHTML = maxForceSlider.value();
+    // document.getElementById('spd').innerHTML = maxSpeedSlider.value();
+    // document.getElementById('per').innerHTML = perceptionSlider.value();
+    // document.getElementById('aln').innerHTML = alignSlider.value();
+    // document.getElementById('coh').innerHTML = cohesionSlider.value();
+    // document.getElementById('sep').innerHTML = separationSlider.value();
 }
 
 function stopFlock() {
