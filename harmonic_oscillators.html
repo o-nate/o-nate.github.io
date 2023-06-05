@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" html="IE=edge" />
+    <meta name="viewport" html="width=device-width, initial-scale=1" />
+    <title>Harmonic oscillators</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.min.js"></script>
+    <script type="text/javascript">
+        lineChartData = {}; //declare an graphect
+        lineChartData.labels = []; //add 'labels' element to graphect (X axis)
+        lineChartData.datasets = []; //add 'datasets' array element to graphect
+        const num_masses = 10;
+        const xlabels = [];
+        const yvalues = [];
+        console.log('start: ', xlabels, yvalues, num_masses);
+    </script>
+    <script src="attraction_osc.js"></script>
+    <script src="attractee_oscil.js"></script>
+    <script src="attraction_oscillator.js"></script>
+    <script src="attractor_oscil.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body onload="makeTable()">
+
+    <h1>Oscillating Attraction</h1>
+
+    <p>
+        <a href='https://le-nate.github.io/index.html'>Fourier series
+            generator</a>
+    </p>
+    <p>
+        <a href='https://le-nate.github.io/flocking.html'>Flocking
+            simulation</a>
+    </p>
+
+    <table class="table table-striped" id="table">
+        <thead>
+            <tr>
+                <th>graphect</th>
+                <th>Velocity</th>
+                <th>Acceleration</th>
+                <th>Time elapsed</th>
+            </tr>
+        </thead>
+        <tbody id="tablebody">
+        </tbody>
+    </table>
+
+    <div>
+        <canvas id="chart" width="400" height="100"></canvas>
+    </div>
+
+    <script>
+        function makeTable() {
+            console.log(1);
+            let html = '';
+            for (let i = 0; i < num_masses; i++) {
+                let html_val = `<span id="m[${i}]"></span>`;
+                let html_acc = `<span id="m[${i}].acceleration"></span>`;
+                let html_hist = `<span id="m[${i}].history"></span>`;
+                let html_time = `<span id="m[${i}].time"></span>`;
+                html += `<tr>
+                    <td>${i + 1}</td>
+                    <td>${html_val}</td>
+                    <td>${html_acc}</td>
+                    <td>${html_time}</td>
+                    <td>${html_hist}</td>
+                    </tr>`;
+                // let velocity = document.getElementById(`m[${i}]`).innerText;
+                // yvalues.push(velocity);
+                // console.log(yvalues);
+            }
+            document.getElementById('tablebody').innerHTML = html;
+
+            // getTableValues();
+        }
+
+        function getTableValues() {
+            var table = document.getElementById('table');
+            for (var r = 0, n = table.rows.length; r < n; r++) {
+                for (var c = 0, m = table.rows[r].cells.length; c < m; c++) {
+                    // alert(table.rows[r].cells[c].innerHTML);
+                    console.log(table.rows[r].cells[c].innerText);
+                }
+            }
+        }
+    </script>
+
+    <script>
+        makeChart();
+
+        async function refreshData() {
+            console.log('refreshData');
+            let graph = await makeChart();
+            let result = Object.keys(graph).map((key) => [key, graph[key]]);
+
+            // console.log(result[1][1]);
+            // graphJson = JSON.parse(graph);
+            // console.log(graphJson);
+            console.log('yvalue', yvalues);
+            console.log('graph', graph);
+            for (i = 0; i < yvalues.length; i++) {
+                // console.log('yvalues loops');
+                if (graph !== undefined) {
+                    console.log('defined');
+                    // graph.data.datasets[0]['data'] = yvalues;
+                    // console.log(graph.data.datasets[0]['data']);
+                } else {
+                    console.log('undefined!');
+                }
+            }
+        }
+
+        setInterval(() => {
+
+            graph.destroy();
+            refreshData();
+            graph.update();
+        }, 5000);
+
+        getData();
+
+        async function getData() {
+            await makeTable();
+            console.log('get');
+            if (yvalues.length < 1) {
+                console.log('nada');
+            } else {
+                console.log('get data >=1');
+                for (let i = 0; i < yvalues.length; i++) {
+                    console.log('yvalues[i]', yvalues[i]);
+                }
+            }
+            // for (let i = 0; i < num_masses; i++) {
+            //     if (document.getElementById(`m[${i}].time`) != null) {
+            //         var val = document.getElementById(`m[${i}]`).innerText;
+            //         console.log('val', val);
+            //     }
+            // }
+
+        }
+
+
+        async function makeChart() {
+            for (curve = 0; curve < num_masses; curve++) {
+                y = [];
+                lineChartData.datasets.push({}); //create a new line dataset
+                dataset = lineChartData.datasets[curve]
+                dataset.fillColor = "rgba(0,0,0,0)";
+                dataset.strokeColor = "rgba(200,200,200,1)";
+                dataset.data = []; //contains the 'Y' axis data
+
+                for (x = 0; x < 100; x++) {
+                    y.push(yvalues[x] * curve); //push some data aka generate distinct separate lines
+                    if (curve === 0)
+                        lineChartData.labels.push(x); //adds x axis labels
+                } //for x
+
+                lineChartData.datasets[curve].data = y; //send new line data to dataset
+            } //for line
+
+            const ctx = document.getElementById('chart');
+            graph = new Chart(ctx, {
+                type: 'line',
+                data: lineChartData,
+            });
+
+            console.log('makeChart', graph.data);
+            return graph.data;
+        }
+
+
+        // makeChart();
+
+        // async function makeChart() {
+        //     await makeTable();
+        //     console.log('awaited');
+        //     const ctx = document.getElementById('chart');
+        //     for (let i = 0; i < num_masses; i++) {
+        //         xlabels.push(`m[${i}]`);
+        //     }
+
+        //     var graph = new Chart(ctx, {
+        //         type: 'line',
+        //         data: {
+        //             labels: xlabels,
+        //             datasets: [{
+        //                 label: 'graphect speed over time',
+        //                 data: yvalues,
+        //                 borderWidth: 1
+        //             }]
+        //         },
+        //         options: {
+        //             scales: {
+        //                 y: {
+        //                     beginAtZero: true
+        //                 }
+        //             }
+        //         }
+        //     });
+        //     return graph;
+        // }
+    </script>
+
+</body>
+
+</html>
